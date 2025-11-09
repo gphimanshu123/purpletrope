@@ -23,18 +23,19 @@
 }
 
 .linkBadge {
-  background: linear-gradient(135deg, #4934a5 0%, #35256d 100%);
-  color: #ffffff;
-  border-color: rgba(22, 12, 56, 0.8);
-  box-shadow: 6px 6px 0 rgba(17, 17, 17, 0.6);
-  font-size: clamp(0.7rem, 2.8vw, 1rem);
-  padding: clamp(0.4rem, 1.8vw, 0.7rem) clamp(1rem, 3vw, 1.55rem);
+  --badge-bg: linear-gradient(135deg, #4934a5 0%, #35256d 100%);
+  --badge-color: #ffffff;
+  --badge-border: rgba(22, 12, 56, 0.8);
+  --badge-shadow: 6px 6px 0 rgba(17, 17, 17, 0.6);
+
+  font-size: clamp(0.68rem, 2.4vw, 0.95rem);
+  padding: clamp(0.36rem, 1.6vw, 0.65rem) clamp(0.9rem, 2.6vw, 1.45rem);
   letter-spacing: 0.18em;
   display: inline-flex;
   align-items: center;
   justify-content: center;
   text-transform: uppercase;
-  min-width: clamp(8rem, 32vw, 11.5rem);
+  min-width: clamp(7rem, 28vw, 10.5rem);
 }
 
 .linkBadge::after {
@@ -89,9 +90,9 @@
 
 @media (max-width: 900px) {
   .linkBadge {
-    font-size: clamp(0.6rem, 2.6vw, 0.85rem);
-    padding: clamp(0.32rem, 2vw, 0.55rem) clamp(0.8rem, 4vw, 1.25rem);
-    min-width: clamp(6.5rem, 36vw, 9rem);
+    font-size: clamp(0.54rem, 2.3vw, 0.8rem);
+    padding: clamp(0.28rem, 1.9vw, 0.5rem) clamp(0.7rem, 3.6vw, 1.1rem);
+    min-width: clamp(6rem, 34vw, 8.4rem);
   }
 
   .linkBackstage {
@@ -115,10 +116,11 @@
 
 @media (max-width: 560px) {
   .linkBadge {
-    font-size: clamp(0.45rem, 3.2vw, 0.65rem);
-    padding: clamp(0.22rem, 2.8vw, 0.4rem) clamp(0.55rem, 5.5vw, 0.85rem);
-    min-width: clamp(4.8rem, 52vw, 7.2rem);
-    box-shadow: 3px 3px 0 rgba(17, 17, 17, 0.55);
+    --badge-shadow: 3px 3px 0 rgba(17, 17, 17, 0.55);
+
+    font-size: clamp(0.4rem, 2.8vw, 0.6rem);
+    padding: clamp(0.18rem, 2.3vw, 0.32rem) clamp(0.48rem, 4.6vw, 0.72rem);
+    min-width: clamp(4.2rem, 46vw, 6.4rem);
   }
 
   .linkBackstage {

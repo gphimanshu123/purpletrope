@@ -41,8 +41,8 @@ const BlogCard: React.FC<BlogCardProps> = ({ post }) => {
 
 	return (
 		<a href={`/blog/${post.slug}`} className={styles.cardLink}>
-			<Card>
-				<CardMedia>
+			<Card className={styles.card}>
+				<CardMedia className={styles.media}>
 					{coverImage ? (
 						<img
 							src={coverImage}
@@ -54,14 +54,14 @@ const BlogCard: React.FC<BlogCardProps> = ({ post }) => {
 						<div className={styles.mediaFallback}>{post.title}</div>
 					)}
 				</CardMedia>
-				<CardHeader>
+				<CardHeader className={styles.header}>
 					<CardEyebrow>{formatDate(post.publishedAt)}</CardEyebrow>
 					<CardTitle>{post.title}</CardTitle>
 					{post.excerpt ? (
 						<CardDescription>{post.excerpt}</CardDescription>
 					) : null}
 				</CardHeader>
-				<CardContent>
+				<CardContent className={styles.content}>
 					{post.tags?.length ? (
 						<div className={styles.tagGroup}>
 							{post.tags.map((tag) => (
@@ -70,7 +70,7 @@ const BlogCard: React.FC<BlogCardProps> = ({ post }) => {
 						</div>
 					) : null}
 				</CardContent>
-				<CardFooter>
+				<CardFooter className={styles.footer}>
 					<div className={styles.author}>
 						<div className={styles.avatar}>
 							{authorAvatar ? (

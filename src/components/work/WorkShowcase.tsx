@@ -238,7 +238,7 @@ const WorkShowcase: React.FC<WorkShowcaseProps> = ({ projects, header }) => {
 						[];
 					const images = project.images?.filter(Boolean) ?? [];
 					const primaryImageUrl = getImageUrl(images[0], 1200);
-					const secondaryImages = images.slice(1);
+					const hasGallery = images.length > 1;
 
 					return (
 						<article key={project.id ?? project.title} className={styles.item}>
@@ -256,52 +256,45 @@ const WorkShowcase: React.FC<WorkShowcaseProps> = ({ projects, header }) => {
 												className={styles.mediaImage}
 												loading="lazy"
 											/>
-											{images.length > 1 && (
+											{hasGallery && (
 												<span className={styles.mediaCount}>
 													{images.length} photos
 												</span>
 											)}
 											<span className={styles.srOnly}>Open gallery</span>
 										</button>
-										{secondaryImages.length > 0 && (
-											<div className={styles.thumbnailRail}>
-												{secondaryImages.map((image, imageIndex) => {
-													const url = getImageUrl(image, 320);
-
-													if (!url) {
-														return null;
-													}
-
-													return (
-														<button
-															type="button"
-															className={styles.thumbnailButton}
-															onClick={() =>
-																openLightbox(projectIndex, imageIndex + 1)
-															}
-															key={image?._key ?? `${project.id}-thumb-${imageIndex}`}
-														>
-															<img
-																src={url}
-																alt={
-																	image?.alt ??
-																	`${project.title} alternate view ${imageIndex + 1}`
-																}
-																className={styles.thumbnailImage}
-																loading="lazy"
-															/>
-															<span className={styles.srOnly}>
-																View image {imageIndex + 2} in gallery
-															</span>
-														</button>
-													);
-												})}
+										{hasGallery && (
+											<div className={styles.mediaControls}>
+												<button
+													type="button"
+													className={styles.mediaNavButton}
+													onClick={(event) => {
+														event.stopPropagation();
+														event.preventDefault();
+														openLightbox(projectIndex, images.length - 1);
+													}}
+													aria-label="View previous image"
+												>
+													<span aria-hidden="true">‹</span>
+												</button>
+												<button
+													type="button"
+													className={styles.mediaNavButton}
+													onClick={(event) => {
+														event.stopPropagation();
+														event.preventDefault();
+														openLightbox(projectIndex, 1);
+													}}
+													aria-label="View next image"
+												>
+													<span aria-hidden="true">›</span>
+												</button>
 											</div>
 										)}
 									</CardMedia>
 								)}
 
-								<CardHeader>
+								<CardHeader className={styles.cardHeader}>
 									{project.period && <CardEyebrow>{project.period}</CardEyebrow>}
 									<CardTitle>{project.title}</CardTitle>
 									{project.description && (
