@@ -34,7 +34,7 @@ const headerQuery = groq`*[_type == "pageHeader" && page == "blog"][0]{
 const header = await loadSanityQuery<Pick<PageHeaderContent, "label" | "title" | "description"> | null>(headerQuery);
 ---
 
-<Layout title="Blog · Debjani Portfolio">
+<Layout title="Blog · Purple Trope">
 	<BlogList posts={posts ?? []} header={header ?? undefined} />
 </Layout>
 
