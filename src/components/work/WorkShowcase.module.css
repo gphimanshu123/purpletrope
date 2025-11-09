@@ -300,6 +300,36 @@
   max-width: 80%;
 }
 
+.lightboxSwiper {
+  width: 100%;
+}
+
+.lightboxSlide {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.lightboxSwiper :global(.swiper-pagination) {
+  position: static;
+  margin-top: 12px;
+}
+
+.lightboxSwiper :global(.swiper-pagination-bullet) {
+  width: 10px;
+  height: 10px;
+  background-color: rgba(249, 250, 251, 0.38);
+  opacity: 1;
+  transition:
+    transform 0.2s ease,
+    background-color 0.2s ease;
+}
+
+.lightboxSwiper :global(.swiper-pagination-bullet-active) {
+  background-color: #f97316;
+  transform: scale(1.2);
+}
+
 .srOnly {
   position: absolute;
   width: 1px;

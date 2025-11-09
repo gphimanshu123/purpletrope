@@ -13,6 +13,11 @@ import { Badge } from '../ui/badge';
 import { urlFor } from '../../lib/sanityImage';
 import styles from './WorkShowcase.module.css';
 import type { PageHeaderContent } from '../../types/pageHeader';
+import { Swiper, SwiperSlide } from 'swiper/react';
+import { Keyboard, Pagination } from 'swiper/modules';
+import type { Swiper as SwiperInstance } from 'swiper/types';
+import 'swiper/css';
+import 'swiper/css/pagination';
 
 export type WorkImage = (SanityImageSource & {
 	_key?: string;
@@ -114,11 +119,10 @@ type LightboxState = {
 	imageIndex: number;
 } | null;
 
-type SwipeState = {
-	pointerId: number | null;
-	startX: number;
-	startY: number;
-	isSwiping: boolean;
+type GallerySlide = {
+	key: string;
+	url: string;
+	alt: string;
 };
 
 const WorkShowcase: React.FC<WorkShowcaseProps> = ({ projects, header }) => {
@@ -139,6 +143,7 @@ const WorkShowcase: React.FC<WorkShowcaseProps> = ({ projects, header }) => {
 	}, [header]);
 
 	const [lightboxState, setLightboxState] = React.useState<LightboxState>(null);
+	const swiperRef = React.useRef<SwiperInstance | null>(null);
 
 	const openLightbox = React.useCallback((projectIndex: number, imageIndex: number) => {
 		setLightboxState({ projectIndex, imageIndex });
@@ -149,6 +154,12 @@ const WorkShowcase: React.FC<WorkShowcaseProps> = ({ projects, header }) => {
 	}, []);
 
 	const goToNextImage = React.useCallback(() => {
+		if (swiperRef.current) {
+			swiperRef.current.slideNext();
+
+			return;
+		}
+
 		setLightboxState((previous) => {
 			if (!previous) {
 				return previous;
@@ -168,6 +179,12 @@ const WorkShowcase: React.FC<WorkShowcaseProps> = ({ projects, header }) => {
 	}, [resolvedProjects]);
 
 	const goToPreviousImage = React.useCallback(() => {
+		if (swiperRef.current) {
+			swiperRef.current.slidePrev();
+
+			return;
+		}
+
 		setLightboxState((previous) => {
 			if (!previous) {
 				return previous;
@@ -215,122 +232,68 @@ const WorkShowcase: React.FC<WorkShowcaseProps> = ({ projects, header }) => {
 		};
 	}, [goToNextImage, goToPreviousImage, lightboxState]);
 
+	React.useEffect(() => {
+		if (!lightboxState) {
+			return;
+		}
+
+		const images =
+			resolvedProjects[lightboxState.projectIndex]?.images?.filter(Boolean) ?? [];
+
+		if (images.length === 0) {
+			setLightboxState(null);
+			return;
+		}
+
+		if (lightboxState.imageIndex >= images.length) {
+			setLightboxState({
+				projectIndex: lightboxState.projectIndex,
+				imageIndex: 0,
+			});
+		}
+	}, [lightboxState, resolvedProjects]);
+
 	const activeProject =
 		lightboxState && resolvedProjects[lightboxState.projectIndex]
 			? resolvedProjects[lightboxState.projectIndex]
 			: null;
 	const activeImages = activeProject?.images?.filter(Boolean) ?? [];
-	const activeImage =
-		lightboxState && activeImages.length > 0
-			? activeImages[lightboxState.imageIndex % activeImages.length]
-			: null;
-	const activeImageUrl = React.useMemo(
-		() => getImageUrl(activeImage ?? undefined, 1600),
-		[activeImage],
-	);
-	const swipeStateRef = React.useRef<SwipeState>({
-		pointerId: null,
-		startX: 0,
-		startY: 0,
-		isSwiping: false,
-	});
-	const canSwipe = activeImages.length > 1;
-
-	const resetSwipeState = React.useCallback(() => {
-		swipeStateRef.current = {
-			pointerId: null,
-			startX: 0,
-			startY: 0,
-			isSwiping: false,
-		};
-	}, []);
-
-	const handleSwipeStart = React.useCallback(
-		(event: React.PointerEvent<HTMLElement>) => {
-			if (!canSwipe) {
-				return;
-			}
-
-			if (event.pointerType === 'mouse' && event.button !== 0) {
-				return;
-			}
-
-			swipeStateRef.current = {
-				pointerId: event.pointerId,
-				startX: event.clientX,
-				startY: event.clientY,
-				isSwiping: true,
-			};
-
-			try {
-				event.currentTarget.setPointerCapture(event.pointerId);
-			} catch {
-				// Ignore if pointer capture is not available.
-			}
-		},
-		[canSwipe],
-	);
-
-	const handleSwipeMove = React.useCallback((event: React.PointerEvent<HTMLElement>) => {
-		const swipeState = swipeStateRef.current;
-
-		if (!swipeState.isSwiping || swipeState.pointerId !== event.pointerId) {
-			return;
+	const gallerySlides = React.useMemo<GallerySlide[]>(() => {
+		if (activeImages.length === 0) {
+			return [];
 		}
 
-		const deltaX = event.clientX - swipeState.startX;
-		const deltaY = event.clientY - swipeState.startY;
+		return activeImages
+			.map((image, index) => {
+				const url = getImageUrl(image ?? undefined, 1600);
 
-		if (Math.abs(deltaX) > Math.abs(deltaY) && Math.abs(deltaX) > 24) {
-			event.preventDefault();
-		}
-	}, []);
-
-	const handleSwipeEnd = React.useCallback(
-		(event: React.PointerEvent<HTMLElement>) => {
-			const swipeState = swipeStateRef.current;
-
-			if (!swipeState.isSwiping || swipeState.pointerId !== event.pointerId) {
-				return;
-			}
-
-			try {
-				event.currentTarget.releasePointerCapture(event.pointerId);
-			} catch {
-				// Ignore if releasePointerCapture is not available.
-			}
-
-			const deltaX = event.clientX - swipeState.startX;
-			const deltaY = event.clientY - swipeState.startY;
-
-			resetSwipeState();
-
-			if (Math.abs(deltaX) > Math.abs(deltaY) && Math.abs(deltaX) > 60) {
-				if (deltaX > 0) {
-					goToPreviousImage();
-				} else {
-					goToNextImage();
+				if (!url) {
+					return null;
 				}
-			}
-		},
-		[goToNextImage, goToPreviousImage, resetSwipeState],
-	);
 
-	const handleSwipeCancel = React.useCallback((event: React.PointerEvent<HTMLElement>) => {
-		const swipeState = swipeStateRef.current;
+				const isObjectImage = typeof image === 'object' && image !== null;
+				const alt =
+					isObjectImage && 'alt' in image && typeof image.alt === 'string' && image.alt.trim()
+						? image.alt
+						: activeProject?.title ?? 'Project image';
+				const key =
+					isObjectImage && '_key' in image && typeof image._key === 'string' && image._key.trim()
+						? image._key
+						: `${activeProject?.id ?? 'project'}-${index}-${url}`;
 
-		if (!swipeState.isSwiping || swipeState.pointerId !== event.pointerId) {
-			return;
-		}
-
-		try {
-			event.currentTarget.releasePointerCapture(event.pointerId);
-		} catch {
-			// Ignore if releasePointerCapture is not available.
-		}
-
-		resetSwipeState();
-	}, [resetSwipeState]);
+				return {
+					key,
+					url,
+					alt,
+				};
+			})
+			.filter((slide): slide is GallerySlide => Boolean(slide));
+	}, [activeImages, activeProject?.id, activeProject?.title]);
+	const currentSlideIndex =
+		lightboxState && gallerySlides.length > 0
+			? Math.min(lightboxState.imageIndex, gallerySlides.length - 1)
+			: 0;
+	const currentSlide = gallerySlides[currentSlideIndex];
 
 	return (
 		<section className={styles.section}>
@@ -439,7 +402,7 @@ const WorkShowcase: React.FC<WorkShowcaseProps> = ({ projects, header }) => {
 				})}
 			</div>
 
-			{lightboxState && activeProject && activeImageUrl && (
+			{lightboxState && activeProject && gallerySlides.length > 0 && (
 				<div className={styles.lightboxOverlay} role="dialog" aria-modal="true">
 					<button
 						type="button"
@@ -456,25 +419,48 @@ const WorkShowcase: React.FC<WorkShowcaseProps> = ({ projects, header }) => {
 							className={styles.lightboxNavButton}
 							onClick={goToPreviousImage}
 							aria-label="View previous image"
-							disabled={activeImages.length <= 1}
+							disabled={gallerySlides.length <= 1}
 						>
 							<span aria-hidden="true">‹</span>
 						</button>
 
-						<figure
-							className={styles.lightboxFigure}
-							onPointerDown={handleSwipeStart}
-							onPointerMove={handleSwipeMove}
-							onPointerUp={handleSwipeEnd}
-							onPointerCancel={handleSwipeCancel}
-						>
-							<img
-								src={activeImageUrl}
-								alt={activeImage?.alt ?? activeProject.title}
-								className={styles.lightboxImage}
-							/>
+						<figure className={styles.lightboxFigure}>
+							<Swiper
+								modules={[Keyboard, Pagination]}
+								initialSlide={currentSlideIndex}
+								onSwiper={(instance) => {
+									swiperRef.current = instance;
+								}}
+								onSlideChange={(instance) => {
+									setLightboxState((previous) => {
+										const nextIndex = instance.realIndex ?? instance.activeIndex;
+
+										if (!previous || previous.imageIndex === nextIndex) {
+											return previous;
+										}
+
+										return {
+											...previous,
+											imageIndex: nextIndex,
+										};
+									});
+								}}
+								onDestroy={() => {
+									swiperRef.current = null;
+								}}
+								keyboard={{ enabled: true }}
+								pagination={{ clickable: true }}
+								loop={gallerySlides.length > 1}
+								className={styles.lightboxSwiper}
+							>
+								{gallerySlides.map((slide) => (
+									<SwiperSlide key={slide.key} className={styles.lightboxSlide}>
+										<img src={slide.url} alt={slide.alt} className={styles.lightboxImage} />
+									</SwiperSlide>
+								))}
+							</Swiper>
 							<figcaption className={styles.lightboxCaption}>
-								{activeImage?.alt ?? activeProject.title}
+								{currentSlide?.alt ?? activeProject.title}
 							</figcaption>
 						</figure>
 
@@ -483,7 +469,7 @@ const WorkShowcase: React.FC<WorkShowcaseProps> = ({ projects, header }) => {
 							className={styles.lightboxNavButton}
 							onClick={goToNextImage}
 							aria-label="View next image"
-							disabled={activeImages.length <= 1}
+							disabled={gallerySlides.length <= 1}
 						>
 							<span aria-hidden="true">›</span>
 						</button>
