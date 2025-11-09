@@ -342,6 +342,16 @@
   .mediaImage {
     height: 280px;
   }
+
+  .badgeGroup {
+    gap: 8px;
+  }
+
+  .badge {
+    padding: 0.2rem 0.65rem;
+    font-size: 0.68rem;
+    letter-spacing: 0.06em;
+  }
 }
 
 @media (max-width: 540px) {
@@ -388,5 +398,11 @@
 
   .lightboxImage {
     max-height: 64vh;
+  }
+
+  .badge {
+    padding: 0.18rem 0.6rem;
+    font-size: 0.62rem;
+    letter-spacing: 0.05em;
   }
 }

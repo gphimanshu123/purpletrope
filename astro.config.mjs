@@ -12,6 +12,7 @@ export default defineConfig({
       dataset: "production",
       apiVersion: "2024-01-01",
       useCdn: true,
+      studioBasePath: "/studio", // Enables embedded Sanity Studio at /studio route
     }),
   ],
 });

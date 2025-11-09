@@ -114,6 +114,13 @@ type LightboxState = {
 	imageIndex: number;
 } | null;
 
+type SwipeState = {
+	pointerId: number | null;
+	startX: number;
+	startY: number;
+	isSwiping: boolean;
+};
+
 const WorkShowcase: React.FC<WorkShowcaseProps> = ({ projects, header }) => {
 	const resolvedProjects = React.useMemo(
 		() => (projects && projects.length > 0 ? projects : defaultProjects),
@@ -221,6 +228,109 @@ const WorkShowcase: React.FC<WorkShowcaseProps> = ({ projects, header }) => {
 		() => getImageUrl(activeImage ?? undefined, 1600),
 		[activeImage],
 	);
+	const swipeStateRef = React.useRef<SwipeState>({
+		pointerId: null,
+		startX: 0,
+		startY: 0,
+		isSwiping: false,
+	});
+	const canSwipe = activeImages.length > 1;
+
+	const resetSwipeState = React.useCallback(() => {
+		swipeStateRef.current = {
+			pointerId: null,
+			startX: 0,
+			startY: 0,
+			isSwiping: false,
+		};
+	}, []);
+
+	const handleSwipeStart = React.useCallback(
+		(event: React.PointerEvent<HTMLElement>) => {
+			if (!canSwipe) {
+				return;
+			}
+
+			if (event.pointerType === 'mouse' && event.button !== 0) {
+				return;
+			}
+
+			swipeStateRef.current = {
+				pointerId: event.pointerId,
+				startX: event.clientX,
+				startY: event.clientY,
+				isSwiping: true,
+			};
+
+			try {
+				event.currentTarget.setPointerCapture(event.pointerId);
+			} catch {
+				// Ignore if pointer capture is not available.
+			}
+		},
+		[canSwipe],
+	);
+
+	const handleSwipeMove = React.useCallback((event: React.PointerEvent<HTMLElement>) => {
+		const swipeState = swipeStateRef.current;
+
+		if (!swipeState.isSwiping || swipeState.pointerId !== event.pointerId) {
+			return;
+		}
+
+		const deltaX = event.clientX - swipeState.startX;
+		const deltaY = event.clientY - swipeState.startY;
+
+		if (Math.abs(deltaX) > Math.abs(deltaY) && Math.abs(deltaX) > 24) {
+			event.preventDefault();
+		}
+	}, []);
+
+	const handleSwipeEnd = React.useCallback(
+		(event: React.PointerEvent<HTMLElement>) => {
+			const swipeState = swipeStateRef.current;
+
+			if (!swipeState.isSwiping || swipeState.pointerId !== event.pointerId) {
+				return;
+			}
+
+			try {
+				event.currentTarget.releasePointerCapture(event.pointerId);
+			} catch {
+				// Ignore if releasePointerCapture is not available.
+			}
+
+			const deltaX = event.clientX - swipeState.startX;
+			const deltaY = event.clientY - swipeState.startY;
+
+			resetSwipeState();
+
+			if (Math.abs(deltaX) > Math.abs(deltaY) && Math.abs(deltaX) > 60) {
+				if (deltaX > 0) {
+					goToPreviousImage();
+				} else {
+					goToNextImage();
+				}
+			}
+		},
+		[goToNextImage, goToPreviousImage, resetSwipeState],
+	);
+
+	const handleSwipeCancel = React.useCallback((event: React.PointerEvent<HTMLElement>) => {
+		const swipeState = swipeStateRef.current;
+
+		if (!swipeState.isSwiping || swipeState.pointerId !== event.pointerId) {
+			return;
+		}
+
+		try {
+			event.currentTarget.releasePointerCapture(event.pointerId);
+		} catch {
+			// Ignore if releasePointerCapture is not available.
+		}
+
+		resetSwipeState();
+	}, [resetSwipeState]);
 
 	return (
 		<section className={styles.section}>
@@ -351,7 +461,13 @@ const WorkShowcase: React.FC<WorkShowcaseProps> = ({ projects, header }) => {
 							<span aria-hidden="true">‹</span>
 						</button>
 
-						<figure className={styles.lightboxFigure}>
+						<figure
+							className={styles.lightboxFigure}
+							onPointerDown={handleSwipeStart}
+							onPointerMove={handleSwipeMove}
+							onPointerUp={handleSwipeEnd}
+							onPointerCancel={handleSwipeCancel}
+						>
 							<img
 								src={activeImageUrl}
 								alt={activeImage?.alt ?? activeProject.title}
