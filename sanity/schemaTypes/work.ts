@@ -21,7 +21,10 @@ export default defineType({
       name: "role",
       title: "Role",
       type: "string",
-      description: "Primary role or responsibility for the project.",
+      description:
+        "Optional. Primary role or responsibility for the project. Leave blank to hide this row.",
+      validation: (Rule) =>
+        Rule.max(160).warning("Keep the role concise (max 160 characters)."),
     }),
     defineField({
       name: "description",

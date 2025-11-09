@@ -31,9 +31,11 @@ const pageHeader = await loadSanityQuery<Pick<PageHeaderContent, "label" | "titl
 const projects: WorkProject[] = (sanityProjects ?? []).map((project) => {
 	const filteredBadges = project.cmsOptions?.filter((tag) => Boolean(tag && tag.trim()));
 	const filteredImages = ((project.images ?? []) as WorkImage[]).filter((image) => Boolean(image));
+	const trimmedRole = project.role?.trim();
 
 	return {
 		...project,
+		role: trimmedRole ? trimmedRole : undefined,
 		cmsOptions: filteredBadges,
 		images: filteredImages.length > 0 ? filteredImages : undefined,
 	};
