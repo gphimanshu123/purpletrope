@@ -1,0 +1,51 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import BlogPostView from '../../components/blog/BlogPost';
+import { loadSanityQuery } from '../../lib/sanityClient';
+import groq from 'groq';
+import type { BlogPost } from '../../types/blog';
+
+export const prerender = true;
+
+export async function getStaticPaths() {
+	const slugs = await loadSanityQuery<Array<{ slug: string }>>(
+		groq`*[_type == "post" && defined(slug.current)]{
+      "slug": slug.current
+    }`,
+	);
+
+	return (slugs ?? []).map(({ slug }) => ({
+		params: { slug },
+	}));
+}
+
+const { slug } = Astro.params;
+
+const postQuery = groq`*[_type == "post" && slug.current == $slug][0]{
+  "id": _id,
+  "slug": slug.current,
+  title,
+  excerpt,
+  publishedAt,
+  tags,
+  heroImage,
+  body,
+  "author": author->{
+    "id": _id,
+    name,
+    avatar,
+    bio
+  }
+}`;
+
+const post = await loadSanityQuery<BlogPost | null>(postQuery, { slug });
+
+if (!post) {
+	throw new Error(`Blog post not found for slug: ${slug}`);
+}
+---
+
+<Layout title={`${post.title} · Debjani Portfolio`}>
+	<BlogPostView post={post} />
+</Layout>
+

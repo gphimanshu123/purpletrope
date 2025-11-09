@@ -1,0 +1,31 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import BlogList from '../../components/blog/BlogList';
+import { loadSanityQuery } from '../../lib/sanityClient';
+import groq from 'groq';
+import type { BlogPostSummary } from '../../types/blog';
+
+export const prerender = true;
+
+const postsQuery = groq`*[_type == "post" && defined(slug.current)] | order(publishedAt desc) {
+  "id": _id,
+  "title": title,
+  "slug": slug.current,
+  excerpt,
+  publishedAt,
+  tags,
+  heroImage,
+  "author": author->{
+    "id": _id,
+    name,
+    avatar
+  }
+}`;
+
+const posts = await loadSanityQuery<BlogPostSummary[]>(postsQuery);
+---
+
+<Layout title="Blog · Debjani Portfolio">
+	<BlogList posts={posts ?? []} />
+</Layout>
+

@@ -9,6 +9,21 @@
     "astro": "astro"
   },
   "dependencies": {
-    "astro": "^5.13.5"
+    "@astrojs/react": "^4.4.2",
+    "@portabletext/react": "^4.0.3",
+    "@portabletext/types": "^2.0.15",
+    "@sanity/astro": "^3.2.10",
+    "@sanity/client": "^7.12.1",
+    "@sanity/image-url": "^1.2.0",
+    "@sanity/vision": "^4.14.2",
+    "astro": "^5.13.5",
+    "groq": "^3.99.0",
+    "react": "^19.2.0",
+    "react-dom": "^19.2.0",
+    "sanity": "^3.99.0"
+  },
+  "devDependencies": {
+    "@types/react": "^19.2.2",
+    "@types/react-dom": "^19.2.2"
   }
 }

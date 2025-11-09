@@ -1,0 +1,287 @@
+---
+import Layout from '../layouts/Layout.astro';
+---
+
+<Layout title="Shop - Debjani Portfolio">
+	<div class="ShopPage">
+		<div class="ShopHeader">
+			<h1>SHOP</h1>
+		</div>
+		
+		<div class="ShopContent">
+			<p>At Purple Trope, we believe that the bond between an artist and a collector is more than just a transaction — it's a meaningful relationship. If you'd like to purchase original artworks, explore our shop. And if you're interested in commissioning a one-of-a-kind piece, we'd love to get to know you better. Through a few thoughtful questions, we ensure that every artwork created finds its way to people who will truly connect with it, cherish it, and value its story.</p>
+		</div>
+
+		<div class="ShopSections">
+			<div class="ShopSection">
+				<div class="SectionSeparator"></div>
+				<div class="SectionHeader">
+					<h2>SHOP MERCH</h2>
+				</div>
+				<div class="SectionContent">
+					<p>Step into our world of wearable art and thoughtfully designed keepsakes. From statement apparel to unique gift items, our collection brings creativity and style together—crafted for those who love to stand out.</p>
+				</div>
+				<div class="SectionImage">
+					<img src="/img/shop/1.jpg" alt="Shop Merch" />
+				</div>
+				<div class="SectionButton">
+					<button class="ShopButton">Visit Shop</button>
+				</div>
+			</div>
+
+			<div class="ShopSection">
+				<div class="SectionSeparator"></div>
+				<div class="SectionHeader">
+					<h2>BUY ORIGINALS</h2>
+				</div>
+				<div class="SectionContent">
+					<p>If you feel inspired to bring home an original piece by Shantell Martin, step into our Shop. And for those who seek something uniquely theirs, we invite you to explore the path of commissioning — a chance to co-create and add a personal touch. Simply reach out to us.</p>
+				</div>
+				<div class="SectionImage">
+					<img src="/img/shop/2.jpg" alt="Buy Originals" />
+				</div>
+				<div class="SectionButton">
+					<button class="ShopButton">Get Started</button>
+				</div>
+			</div>
+
+			<div class="ShopSection">
+				<div class="SectionSeparator"></div>
+				<div class="SectionHeader">
+					<h2>COMMISSION NEW WORK</h2>
+				</div>
+				<div class="SectionContent">
+					<h3>Commission a Custom Artwork</h3>
+					<p>Collaborate with us to bring your vision to life. Share your words, stories, and inspirations, and we'll create a one-of-a-kind original crafted just for you.</p>
+				</div>
+				<div class="SectionImage">
+					<img src="/img/shop/3.jpg" alt="Commission Work" />
+				</div>
+				<div class="SectionButton">
+					<a href="mailto:purpletropegallery@gmail.com" class="ShopButton">Email</a>
+				</div>
+			</div>
+		</div>
+	</div>
+</Layout>
+
+<style>
+	.ShopPage {
+		background-color: #EFEFF2;
+		min-height: 100vh;
+		padding: 0;
+		margin: 0;
+	}
+
+	.ShopHeader {
+		padding: 150px 0 40px 50px;
+		text-align: left;
+	}
+
+	.ShopHeader h1 {
+		font-family: 'Kommissar', Arial, sans-serif;
+		font-size: 150px;
+		font-weight: 900;
+		color: #000;
+		text-transform: uppercase;
+		letter-spacing: 2px;
+		margin: 0;
+		line-height: 0.8;
+	}
+
+	.ShopContent {
+		padding: 0 50px 60px;
+		max-width: 800px;
+		font-family: Arial, sans-serif;
+		font-size: 18px;
+		line-height: 1.6;
+		color: #333;
+		text-align: left;
+	}
+
+	.ShopContent p {
+		margin: 0;
+	}
+
+	.ShopSections {
+		padding: 0 50px 100px;
+		display: flex;
+		flex-direction: column;
+		gap: 80px;
+	}
+
+	.ShopSection {
+		display: flex;
+		flex-direction: column;
+		gap: 20px;
+		position: relative;
+	}
+
+	.SectionSeparator {
+		width: 60px;
+		height: 2px;
+		background: #000;
+		margin-bottom: 10px;
+	}
+
+	.SectionHeader h2 {
+		font-family: 'Kommissar', Arial, sans-serif;
+		font-size: 80px;
+		font-weight: 900;
+		color: #000;
+		text-transform: uppercase;
+		letter-spacing: 2px;
+		margin: 0;
+		line-height: 0.9;
+	}
+
+	.SectionContent p {
+		font-family: Arial, sans-serif;
+		font-size: 18px;
+		line-height: 1.6;
+		color: #333;
+		margin: 0;
+		max-width: 600px;
+	}
+
+	.SectionContent h3 {
+		font-family: Arial, sans-serif;
+		font-size: 18px;
+		font-weight: bold;
+		color: #333;
+		margin: 0 0 15px 0;
+	}
+
+	.SectionImage {
+		width: 100%;
+		max-width: 500px;
+		position: relative;
+	}
+
+	.SectionImage img {
+		width: 100%;
+		height: auto;
+		border-radius: 8px;
+	}
+
+	.SectionButton {
+		position: absolute;
+		bottom: 20px;
+		left: 50%;
+		transform: translateX(-50%);
+		z-index: 10;
+	}
+
+	.ShopButton {
+		background: white;
+		border: 2px solid #000;
+		padding: 15px 30px;
+		font-family: 'Kommissar', Arial, sans-serif;
+		font-size: 16px;
+		font-weight: 900;
+		color: #000;
+		text-transform: uppercase;
+		letter-spacing: 1px;
+		cursor: pointer;
+		transition: all 0.3s ease;
+		border-radius: 4px;
+		text-decoration: none;
+		display: inline-block;
+	}
+
+	.ShopButton:hover {
+		background: #000;
+		color: white;
+	}
+
+	/* Desktop Layout */
+	@media screen and (min-width: 1024px) {
+		.ShopSections {
+			display: grid;
+			grid-template-columns: repeat(3, 1fr);
+			gap: 60px;
+			padding: 0 50px 100px;
+		}
+
+		.SectionHeader h2 {
+			font-size: 60px;
+			text-align: left;
+		}
+
+		.SectionContent p {
+			font-size: 16px;
+			text-align: left;
+		}
+
+		.SectionImage {
+			max-width: 100%;
+		}
+
+		.SectionSeparator {
+			width: 60px;
+		}
+	}
+
+	/* Tablet */
+	@media screen and (max-width: 768px) {
+		.ShopHeader {
+			padding: 120px 0 30px 30px;
+		}
+
+		.ShopHeader h1 {
+			font-size: 100px;
+		}
+
+		.ShopContent {
+			padding: 0 30px 40px;
+			font-size: 16px;
+		}
+
+		.ShopSections {
+			padding: 0 30px 80px;
+			gap: 50px;
+		}
+
+		.SectionHeader h2 {
+			font-size: 60px;
+		}
+
+		.SectionContent p {
+			font-size: 16px;
+		}
+	}
+
+	/* Mobile */
+	@media screen and (max-width: 480px) {
+		.ShopHeader {
+			padding: 100px 0 20px 20px;
+		}
+
+		.ShopHeader h1 {
+			font-size: 80px;
+		}
+
+		.ShopContent {
+			padding: 0 20px 30px;
+			font-size: 14px;
+		}
+
+		.ShopSections {
+			padding: 0 20px 60px;
+			gap: 40px;
+		}
+
+		.SectionHeader h2 {
+			font-size: 50px;
+		}
+
+		.SectionContent p {
+			font-size: 14px;
+		}
+
+		.ShopButton {
+			padding: 12px 25px;
+			font-size: 14px;
+		}
+	}
+</style>

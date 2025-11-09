@@ -1,0 +1,92 @@
+.body {
+	display: grid;
+	gap: 2rem;
+	color: #050505;
+	font-size: 1.18rem;
+	line-height: 1.85;
+	font-family: 'Gloria Hallelujah', cursive;
+}
+
+.heading2 {
+	font-size: clamp(2.4rem, 5vw, 3.3rem);
+	font-weight: 700;
+	letter-spacing: 0.08em;
+	color: #000000;
+	margin-top: 3.2rem;
+	text-transform: uppercase;
+	text-shadow: 4px 4px 0 rgba(0, 0, 0, 0.28);
+}
+
+.heading3 {
+	font-size: clamp(2rem, 4vw, 2.5rem);
+	font-weight: 700;
+	color: #050505;
+	margin-top: 2.5rem;
+	text-transform: uppercase;
+}
+
+.paragraph {
+	margin: 0;
+}
+
+.blockquote {
+	border: 3px solid #000000;
+	border-left-width: 6px;
+	padding: 1.5rem 2rem;
+	font-style: italic;
+	color: #000000;
+	background: #ffffff;
+	box-shadow: 8px 8px 0 rgba(0, 0, 0, 0.75);
+	border-radius: 28px 26px 22px 26px;
+}
+
+.unorderedList,
+.orderedList {
+	padding-left: 2.2rem;
+	display: grid;
+	gap: 1rem;
+}
+
+.unorderedList li::marker,
+.orderedList li::marker {
+	font-size: 1.1em;
+}
+
+.strong {
+	font-weight: 700;
+	color: #000000;
+}
+
+.link {
+	color: #000000;
+	text-decoration: none;
+	font-weight: 700;
+	position: relative;
+	letter-spacing: 0.08em;
+	text-transform: uppercase;
+	border-bottom: 3px solid #000000;
+	padding-bottom: 0.1rem;
+}
+
+.figure {
+	display: grid;
+	gap: 1rem;
+	margin: 3rem 0;
+	justify-items: center;
+}
+
+.figure img {
+	width: 100%;
+	border-radius: 32px;
+	object-fit: cover;
+	border: 3px solid #000000;
+	box-shadow: 12px 12px 0 rgba(0, 0, 0, 0.85);
+}
+
+.caption {
+	font-size: 1rem;
+	color: #000000;
+	text-align: center;
+	letter-spacing: 0.05em;
+}
+

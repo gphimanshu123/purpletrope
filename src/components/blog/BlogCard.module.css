@@ -1,0 +1,104 @@
+.cardLink {
+	text-decoration: none;
+	color: inherit;
+	display: block;
+	height: 100%;
+	font-family: 'Gloria Hallelujah', cursive;
+}
+
+.mediaImage {
+	width: 100%;
+	height: 100%;
+	object-fit: cover;
+	border-bottom: 3px solid #000000;
+	filter: saturate(0.85) contrast(1.05);
+	transition: transform 0.4s ease, filter 0.4s ease;
+}
+
+.cardLink:hover .mediaImage {
+	transform: scale(1.05);
+	filter: saturate(1.1) contrast(1.1);
+}
+
+.mediaFallback {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	font-size: 1.35rem;
+	color: #000000;
+	font-weight: 600;
+	letter-spacing: 0.04em;
+	height: 100%;
+	background: repeating-linear-gradient(
+		135deg,
+		rgba(0, 0, 0, 0.05),
+		rgba(0, 0, 0, 0.05) 12px,
+		rgba(0, 0, 0, 0.12) 12px,
+		rgba(0, 0, 0, 0.12) 24px
+	);
+}
+
+.tagGroup {
+	display: flex;
+	flex-wrap: wrap;
+	gap: 0.6rem;
+}
+
+.meta {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	gap: 1.1rem;
+	color: #000000;
+	font-size: 1rem;
+	letter-spacing: 0.05em;
+	text-transform: uppercase;
+}
+
+.author {
+	display: flex;
+	align-items: center;
+	gap: 0.85rem;
+}
+
+.avatar {
+	width: 46px;
+	height: 46px;
+	border-radius: 50%;
+	border: 2px solid #000000;
+	background: #ffffff;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	color: #000000;
+	font-weight: 700;
+	font-size: 1.05rem;
+	text-transform: uppercase;
+	box-shadow: 4px 4px 0 rgba(0, 0, 0, 0.75);
+}
+
+.avatarImage {
+	width: 100%;
+	height: 100%;
+	object-fit: cover;
+	border-radius: 50%;
+}
+
+.readMore {
+	font-weight: 700;
+	color: #000000;
+	display: inline-flex;
+	align-items: center;
+	gap: 0.35rem;
+	text-decoration: none;
+	text-transform: uppercase;
+	letter-spacing: 0.08em;
+	border-bottom: 2px solid #000000;
+	padding-bottom: 0.15rem;
+	transition: transform 0.24s ease;
+}
+
+.readMore:hover {
+	transform: translateX(4px);
+}
+

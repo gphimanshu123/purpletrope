@@ -1,46 +1,66 @@
-# Astro Starter Kit: Basics
+# Debjani Portfolio · Astro + Sanity Blog
 
-```sh
-npm create astro@latest -- --template basics
-```
+This project is an Astro-powered portfolio that now includes a Sanity-backed blog. Sanity provides an authoring experience for long-form content, while Astro renders a performant, static site with React UI components.
 
-> 🧑‍🚀 **Seasoned astronaut?** Delete this file. Have fun!
+## Requirements
 
-## 🚀 Project Structure
+- Node.js 20.18 or newer (Sanity Studio warns when the version is outside the supported range — consider upgrading to 20.19+)
+- A Sanity project with a dataset (the default `production` dataset works well)
 
-Inside of your Astro project, you'll see the following folders and files:
+## Setup
 
-```text
-/
-├── public/
-│   └── favicon.svg
-├── src
-│   ├── assets
-│   │   └── astro.svg
-│   ├── components
-│   │   └── Welcome.astro
-│   ├── layouts
-│   │   └── Layout.astro
-│   └── pages
-│       └── index.astro
-└── package.json
-```
+1. **Install dependencies**
 
-To learn more about the folder structure of an Astro project, refer to [our guide on project structure](https://docs.astro.build/en/basics/project-structure/).
+   ```sh
+   npm install
+   ```
 
-## 🧞 Commands
+2. **Configure environment variables**
 
-All commands are run from the root of the project, from a terminal:
+   Copy `env.example` to `.env.local` (or `.env`) and fill in the values from your Sanity project:
 
-| Command                   | Action                                           |
-| :------------------------ | :----------------------------------------------- |
-| `npm install`             | Installs dependencies                            |
-| `npm run dev`             | Starts local dev server at `localhost:4321`      |
-| `npm run build`           | Build your production site to `./dist/`          |
-| `npm run preview`         | Preview your build locally, before deploying     |
-| `npm run astro ...`       | Run CLI commands like `astro add`, `astro check` |
-| `npm run astro -- --help` | Get help using the Astro CLI                     |
+   ```
+    SANITY_PROJECT_ID=<your-project-id>
+    SANITY_DATASET=production
+    SANITY_API_VERSION=2024-01-01
+    SANITY_API_READ_TOKEN=<optional-read-token>
+    PUBLIC_SANITY_VISUAL_EDITING_ENABLED=false
+   ```
 
-## 👀 Want to learn more?
+   - `SANITY_API_READ_TOKEN` is only required if you plan to enable Visual Editing or query drafts.
+   - Update `SANITY_API_VERSION` to the API version you prefer.
 
-Feel free to check [our documentation](https://docs.astro.build) or jump into our [Discord server](https://astro.build/chat).
+3. **Populate Sanity Studio (optional)**
+
+   The repo already contains `sanity.config.ts` and schema definitions under `sanity/schemaTypes`. To work inside Studio:
+
+   ```sh
+   npm exec sanity dev
+   ```
+
+   This runs the Studio at `http://localhost:3333` using the dataset configured above. Publish a few `Post` documents to populate the blog.
+
+## Available Scripts
+
+All commands run from the project root:
+
+| Command                | Description                            |
+| :--------------------- | :------------------------------------- |
+| `npm run dev`          | Start Astro at `http://localhost:4321` |
+| `npm run build`        | Generate the production build          |
+| `npm run preview`      | Preview the production build locally   |
+| `npm exec sanity dev`  | Start Sanity Studio with hot reloading |
+| `npm exec sanity help` | Inspect additional Sanity CLI commands |
+
+## Project Highlights
+
+- **Blog listing** at `/blog` with React-based cards, Sanity imagery, and author metadata.
+- **Dynamic post pages** at `/blog/[slug]` fetched from Sanity and rendered with a custom Portable Text renderer.
+- **Sanity Studio configuration** ready for the included `post` and `author` schemas.
+- **Reusable UI primitives** in `src/components/ui` for cards, badges, and typography styling.
+
+## Next Steps
+
+- Tailor the Sanity schemas (`sanity/schemaTypes`) to match your content model.
+- Update the styling in `src/components/blog` to better match your brand.
+- Configure deployment (e.g., Vercel, Netlify) and add the production domain to the Sanity CORS settings.

@@ -1,0 +1,77 @@
+.card {
+	background-color: #ffffff;
+	border-radius: 36px 32px 30px 28px;
+	border: 2px solid #000000;
+	box-shadow: 9px 9px 0 rgba(0, 0, 0, 0.75);
+	overflow: hidden;
+	display: flex;
+	flex-direction: column;
+	transition: transform 0.24s ease, box-shadow 0.24s ease;
+}
+
+.card:hover {
+	transform: translate(-4px, -4px) rotate(-0.75deg);
+	box-shadow: 12px 12px 0 rgba(0, 0, 0, 0.75);
+}
+
+.media {
+	position: relative;
+	overflow: hidden;
+	background: repeating-linear-gradient(
+		135deg,
+		rgba(0, 0, 0, 0.06),
+		rgba(0, 0, 0, 0.06) 10px,
+		rgba(0, 0, 0, 0.12) 10px,
+		rgba(0, 0, 0, 0.12) 20px
+	);
+	border-bottom: 3px solid #000000;
+}
+
+.header {
+	padding: 2.25rem 2.25rem 1.2rem;
+	display: flex;
+	flex-direction: column;
+	gap: 0.9rem;
+}
+
+.content {
+	padding: 0 2.25rem 1.75rem;
+	display: flex;
+	flex-direction: column;
+	gap: 1.1rem;
+	flex: 1;
+}
+
+.footer {
+	padding: 0 2.25rem 1.9rem;
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	gap: 1.25rem;
+}
+
+.title {
+	color: #050505;
+	font-family: 'Gloria Hallelujah', cursive;
+	font-weight: 600;
+	font-size: clamp(1.45rem, 2vw, 1.85rem);
+	letter-spacing: 0.01em;
+	line-height: 1.1;
+	text-transform: uppercase;
+}
+
+.description {
+	color: #0f172a;
+	font-family: 'Gloria Hallelujah', cursive;
+	font-size: 1.1rem;
+	line-height: 1.6;
+}
+
+.eyebrow {
+	color: #000000;
+	font-family: 'Gloria Hallelujah', cursive;
+	font-size: 0.95rem;
+	letter-spacing: 0.08em;
+	text-transform: uppercase;
+}
+

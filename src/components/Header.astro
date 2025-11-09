@@ -1,0 +1,288 @@
+---
+const normalizePathname = (pathname: string) => {
+	const path = pathname.replace(/\/$/, '');
+	return path === '' ? '/' : path;
+};
+
+type NavItem = {
+	label: string;
+	href: string;
+};
+
+const ALL_NAV_ITEMS: NavItem[] = [
+	{ label: 'HOME', href: '/' },
+	{ label: 'SHOP', href: '/shop' },
+	{ label: 'INFO', href: '/info' },
+	{ label: 'WORK', href: '/work' },
+	{ label: 'CONTACT', href: '/contact' },
+	{ label: 'BLOGS', href: '/blog' }
+];
+
+const currentPath = normalizePathname(Astro.url.pathname);
+
+const navItems = ALL_NAV_ITEMS.filter((item) => item.href !== currentPath);
+
+if (currentPath !== '/') {
+	const homeIndex = navItems.findIndex((item) => item.href === '/');
+	if (homeIndex === -1) {
+		const homeItem = ALL_NAV_ITEMS.find((item) => item.href === '/');
+		if (homeItem) {
+			navItems.unshift(homeItem);
+		}
+	} else if (homeIndex > 0) {
+		const [homeItem] = navItems.splice(homeIndex, 1);
+		navItems.unshift(homeItem);
+	}
+}
+---
+
+<header class="Header">
+	<div class="HeaderLogo" id="headerLogo">
+		<img src="/logo.png" alt="Purple Trope Logo" />
+	</div>
+</header>
+
+<!-- Full Screen Overlay -->
+<div class="Overlay" id="fullScreenOverlay">
+	<div class="OverlayContent">
+		<div class="OverlayClose" id="overlayClose">&times;</div>
+		<div class="OverlayMenu">
+			{navItems.map((item, index) => (
+				<a href={item.href} class="OverlayMenuItem" data-delay={index} aria-current={item.href === currentPath ? 'page' : undefined}>
+					<span class="MenuItemText">{item.label}</span>
+				</a>
+			))}
+		</div>
+	</div>
+</div>
+
+<script>
+	// Header functionality
+	document.addEventListener('DOMContentLoaded', function() {
+		const headerLogo = document.getElementById('headerLogo');
+		const overlay = document.getElementById('fullScreenOverlay');
+		const overlayClose = document.getElementById('overlayClose');
+
+		// Check if elements exist before adding event listeners
+		if (!headerLogo || !overlay || !overlayClose) {
+			console.error('Header elements not found');
+			return;
+		}
+
+		// Open overlay when logo is clicked
+		headerLogo.addEventListener('click', function() {
+			overlay.classList.add('active');
+			document.body.style.overflow = 'hidden'; // Prevent scrolling
+			
+			// Animate menu items with stagger effect
+			const menuItems = overlay.querySelectorAll('.OverlayMenuItem') as NodeListOf<HTMLElement>;
+			menuItems.forEach((item, index) => {
+				item.style.opacity = '0';
+				item.style.transform = 'translateY(30px)';
+				
+				setTimeout(() => {
+					item.style.opacity = '1';
+					item.style.transform = 'translateY(0)';
+				}, 200 + (index * 150)); // 200ms base delay + 150ms per item
+			});
+		});
+
+		// Close overlay when close button is clicked
+		overlayClose.addEventListener('click', function() {
+			// Reset menu items animation
+			const menuItems = overlay.querySelectorAll('.OverlayMenuItem') as NodeListOf<HTMLElement>;
+			menuItems.forEach((item) => {
+				item.style.opacity = '';
+				item.style.transform = '';
+			});
+			
+			overlay.classList.remove('active');
+			document.body.style.overflow = 'auto'; // Restore scrolling
+		});
+
+		// Close overlay when clicking outside content
+		overlay.addEventListener('click', function(e) {
+			if (e.target === overlay) {
+				// Reset menu items animation
+				const menuItems = overlay.querySelectorAll('.OverlayMenuItem') as NodeListOf<HTMLElement>;
+				menuItems.forEach((item) => {
+					item.style.opacity = '';
+					item.style.transform = '';
+				});
+				
+				overlay.classList.remove('active');
+				document.body.style.overflow = 'auto';
+			}
+		});
+
+		// Close overlay with Escape key
+		document.addEventListener('keydown', function(e) {
+			if (e.key === 'Escape' && overlay.classList.contains('active')) {
+				// Reset menu items animation
+				const menuItems = overlay.querySelectorAll('.OverlayMenuItem') as NodeListOf<HTMLElement>;
+				menuItems.forEach((item) => {
+					item.style.opacity = '';
+					item.style.transform = '';
+				});
+				
+				overlay.classList.remove('active');
+				document.body.style.overflow = 'auto';
+			}
+		});
+	});
+</script>
+
+<style>
+	.Header {
+		position: fixed;
+		top: 0;
+		left: 0;
+		z-index: 1000;
+		padding: 20px;
+	}
+
+	.HeaderLogo {
+		cursor: pointer;
+		transition: transform 0.3s ease;
+	}
+
+	.HeaderLogo:hover {
+		transform: scale(1.05);
+	}
+
+	.HeaderLogo img {
+		height: 80px;
+		width: auto;
+		max-width: 300px;
+	}
+
+	/* Full Screen Overlay */
+	.Overlay {
+		position: fixed;
+		top: 0;
+		left: 0;
+		width: 100%;
+		height: 100%;
+		background: rgba(0, 0, 0, 0.95);
+		z-index: 2000;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		opacity: 0;
+		visibility: hidden;
+		transition: opacity 0.3s ease, visibility 0.3s ease;
+	}
+
+	.Overlay.active {
+		opacity: 1;
+		visibility: visible;
+	}
+
+	.OverlayContent {
+		position: relative;
+		text-align: center;
+		color: white;
+	}
+
+	.OverlayClose {
+		position: fixed;
+		top: 20px;
+		right: 20px;
+		font-size: 40px;
+		cursor: pointer;
+		transition: opacity 0.3s ease;
+		width: 40px;
+		height: 40px;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		color: white;
+		z-index: 3000;
+	}
+
+	.OverlayClose:hover {
+		opacity: 0.7;
+	}
+
+	.OverlayMenu {
+		display: flex;
+		flex-direction: column;
+		width: 100%;
+		height: 100vh;
+		justify-content: center;
+		gap: 0;
+	}
+
+	.OverlayMenuItem {
+		position: relative;
+		display: flex;
+		align-items: center;
+		height: 20vh;
+		width: 100%;
+		text-decoration: none;
+		opacity: 0;
+		transform: translateY(30px);
+		transition: opacity 0.3s ease, transform 0.3s ease;
+		margin: 0;
+		padding: 0;
+	}
+
+	.MenuItemText {
+		font-family: 'Kommissar', Arial, sans-serif;
+		font-size: 10vw;
+		font-weight: 900;
+		color: white;
+		text-transform: uppercase;
+		letter-spacing: 2px;
+		z-index: 2;
+		position: relative;
+		margin-left: 2vw;
+		transition: color 0.3s ease, transform 0.3s ease;
+	}
+
+	.OverlayMenuItem:hover .MenuItemText {
+		color: #ccc;
+		transform: translateX(20px);
+	}
+
+	/* Mobile responsiveness */
+	@media screen and (max-width: 768px) {
+		.Header {
+			padding: 15px;
+		}
+
+		.HeaderLogo img {
+			height: 60px;
+		}
+
+		.MenuItemText {
+			font-size: 24vw;
+		}
+
+		.OverlayClose {
+			top: 15px;
+			right: 15px;
+			font-size: 32px;
+		}
+	}
+
+	@media screen and (max-width: 480px) {
+		.Header {
+			padding: 10px;
+		}
+
+		.HeaderLogo img {
+			height: 70px;
+		}
+
+		.MenuItemText {
+			font-size: 32vw;
+		}
+
+		.OverlayClose {
+			top: 10px;
+			right: 10px;
+			font-size: 28px;
+		}
+	}
+</style>

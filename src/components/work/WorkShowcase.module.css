@@ -1,0 +1,156 @@
+.section {
+	background-color: #efeff2;
+	min-height: 100vh;
+	padding: 140px 48px 120px;
+}
+
+.header {
+	max-width: 840px;
+	margin: 0 auto 64px;
+	text-align: center;
+	display: flex;
+	flex-direction: column;
+	gap: 16px;
+}
+
+.eyebrow {
+	font-family: 'Gloria Hallelujah', cursive;
+	font-size: 0.95rem;
+	letter-spacing: 0.18em;
+	text-transform: uppercase;
+	color: #0b0b0b;
+}
+
+.title {
+	margin: 0;
+	font-family: 'Kommissar', Arial, sans-serif;
+	font-size: clamp(2.75rem, 7vw, 5rem);
+	font-weight: 900;
+	line-height: 0.95;
+	text-transform: uppercase;
+	color: #050505;
+}
+
+.lede {
+	margin: 0 auto;
+	max-width: 620px;
+	font-family: Arial, sans-serif;
+	font-size: 1.15rem;
+	line-height: 1.7;
+	color: #2d2d2d;
+}
+
+.grid {
+	display: grid;
+	grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+	gap: 40px;
+	max-width: 1120px;
+	margin: 0 auto;
+}
+
+.item {
+	display: flex;
+}
+
+.card {
+	width: 100%;
+	min-height: 100%;
+}
+
+.cardContent {
+	display: flex;
+	flex-direction: column;
+	gap: 24px;
+}
+
+.meta {
+	display: grid;
+	grid-template-columns: auto 1fr;
+	align-items: baseline;
+	column-gap: 12px;
+	row-gap: 6px;
+	margin: 0;
+}
+
+.metaLabel {
+	font-family: 'Gloria Hallelujah', cursive;
+	font-size: 0.95rem;
+	letter-spacing: 0.08em;
+	text-transform: uppercase;
+	color: #0b0b0b;
+}
+
+.metaValue {
+	margin: 0;
+	font-family: Arial, sans-serif;
+	font-size: 1.05rem;
+	color: #1f2933;
+}
+
+.badgeGroup {
+	display: flex;
+	flex-wrap: wrap;
+	gap: 10px;
+}
+
+.link {
+	align-self: flex-start;
+	padding-bottom: 4px;
+	border-bottom: 2px solid currentColor;
+	font-family: 'Gloria Hallelujah', cursive;
+	font-size: 0.95rem;
+	letter-spacing: 0.12em;
+	text-transform: uppercase;
+	text-decoration: none;
+	color: #000000;
+	transition: color 0.2s ease, transform 0.2s ease;
+}
+
+.link:hover {
+	color: #f97316;
+	transform: translateY(-2px);
+}
+
+@media (max-width: 1024px) {
+	.section {
+		padding: 120px 36px 100px;
+	}
+
+	.header {
+		margin-bottom: 52px;
+	}
+}
+
+@media (max-width: 768px) {
+	.section {
+		padding: 110px 28px 90px;
+	}
+
+	.header {
+		text-align: left;
+	}
+
+	.lede {
+		margin: 0;
+	}
+
+	.grid {
+		gap: 28px;
+	}
+}
+
+@media (max-width: 540px) {
+	.section {
+		padding: 96px 20px 80px;
+	}
+
+	.title {
+		font-size: clamp(2.4rem, 12vw, 3.4rem);
+	}
+
+	.grid {
+		grid-template-columns: 1fr;
+	}
+}
+
+

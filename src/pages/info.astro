@@ -1,0 +1,89 @@
+---
+import Layout from '../layouts/Layout.astro';
+---
+
+<Layout title="Info - Debjani Portfolio">
+	<div class="InfoPage">
+		<div class="InfoHeader">
+			<h1>INFO</h1>
+		</div>
+		
+		<div class="InfoContent">
+			<p>Purple Trope is more than an art house—it's a living canvas of ideas, design, and storytelling. Founded in 2015 by artist & designer Debjani Hazarika, Purple Trope blends contemporary art, sustainable design, and cultural narratives from Northeast India into creations that inspire thought and conversation.</p>
+			
+			<p>From bespoke artworks and journals to sustainable gift boxes, visual communication projects, and exhibitions, Purple Trope thrives at the intersection of art, culture, and conscious living.</p>
+			
+			<p>Debjani's journey is a constant exploration of form and feeling—bringing together doodles, modern design, and cultural symbolism to craft works that not only capture attention but also evoke reflection and joy.</p>
+			
+			<p>Her vision continues through Purple Trope Archive, where art meets sustainability, offering journals, tote bags, calendars, and thoughtfully designed objects for everyday inspiration.</p>
+		</div>
+	</div>
+</Layout>
+
+<style>
+	.InfoPage {
+		background-color: #EFEFF2;
+		min-height: 100vh;
+		padding: 0;
+		margin: 0;
+	}
+
+	.InfoHeader {
+		padding: 150px 0 20px 50px;
+		text-align: left;
+	}
+
+	.InfoHeader h1 {
+		font-family: 'Kommissar', Arial, sans-serif;
+		font-size: 150px;
+		font-weight: 900;
+		color: #000;
+		text-transform: uppercase;
+		letter-spacing: 2px;
+		margin: 0;
+		line-height: 0.8;
+	}
+
+	.InfoContent {
+		padding: 20px 50px 50px;
+		max-width: 800px;
+		font-family: Arial, sans-serif;
+		font-size: 18px;
+		line-height: 1.6;
+		color: #333;
+	}
+
+	.InfoContent p {
+		margin-bottom: 20px;
+	}
+
+	@media screen and (max-width: 768px) {
+		.InfoHeader {
+			padding: 120px 0 15px 30px;
+		}
+
+		.InfoHeader h1 {
+			font-size: 120px;
+		}
+
+		.InfoContent {
+			padding: 15px 30px 30px;
+			font-size: 16px;
+		}
+	}
+
+	@media screen and (max-width: 480px) {
+		.InfoHeader {
+			padding: 100px 0 10px 20px;
+		}
+
+		.InfoHeader h1 {
+			font-size: 60px;
+		}
+
+		.InfoContent {
+			padding: 10px 20px 20px;
+			font-size: 14px;
+		}
+	}
+</style>
