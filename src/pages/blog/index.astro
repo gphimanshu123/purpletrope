@@ -4,6 +4,7 @@ import BlogList from '../../components/blog/BlogList';
 import { loadSanityQuery } from '../../lib/sanityClient';
 import groq from 'groq';
 import type { BlogPostSummary } from '../../types/blog';
+import type { PageHeaderContent } from '../../types/pageHeader';
 
 export const prerender = true;
 
@@ -15,6 +16,8 @@ const postsQuery = groq`*[_type == "post" && defined(slug.current)] | order(publ
   publishedAt,
   tags,
   heroImage,
+  mainImage,
+  "coverImage": coalesce(mainImage, heroImage),
   "author": author->{
     "id": _id,
     name,
@@ -23,9 +26,15 @@ const postsQuery = groq`*[_type == "post" && defined(slug.current)] | order(publ
 }`;
 
 const posts = await loadSanityQuery<BlogPostSummary[]>(postsQuery);
+const headerQuery = groq`*[_type == "pageHeader" && page == "blog"][0]{
+  label,
+  title,
+  description
+}`;
+const header = await loadSanityQuery<Pick<PageHeaderContent, "label" | "title" | "description"> | null>(headerQuery);
 ---
 
 <Layout title="Blog · Debjani Portfolio">
-	<BlogList posts={posts ?? []} />
+	<BlogList posts={posts ?? []} header={header ?? undefined} />
 </Layout>
 

@@ -44,6 +44,14 @@
 	text-align: center;
 }
 
+.eyebrow {
+	font-size: clamp(0.95rem, 1.8vw, 1.1rem);
+	letter-spacing: 0.4em;
+	text-transform: uppercase;
+	font-weight: 600;
+	color: #181818;
+}
+
 .title {
 	font-size: clamp(2.8rem, 7vw, 4.2rem);
 	font-weight: 700;
@@ -90,6 +98,10 @@
 	.subtitle {
 		max-width: 540px;
 	}
+
+	.eyebrow {
+		letter-spacing: 0.32em;
+	}
 }
 
 @media (max-width: 720px) {
@@ -115,6 +127,10 @@
 	.subtitle {
 		font-size: 1.05rem;
 		padding: 1rem 1.3rem;
+	}
+
+	.eyebrow {
+		font-size: 0.9rem;
 	}
 
 	.grid {

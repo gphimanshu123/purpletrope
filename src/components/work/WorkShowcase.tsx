@@ -1,5 +1,4 @@
 import * as React from 'react';
-import * as React from 'react';
 import type { SanityImageSource } from '@sanity/image-url/lib/types/types';
 import {
 	Card,
@@ -13,6 +12,7 @@ import {
 import { Badge } from '../ui/badge';
 import { urlFor } from '../../lib/sanityImage';
 import styles from './WorkShowcase.module.css';
+import type { PageHeaderContent } from '../../types/pageHeader';
 
 export type WorkImage = (SanityImageSource & {
 	_key?: string;
@@ -33,7 +33,16 @@ export interface WorkProject {
 
 export interface WorkShowcaseProps {
 	projects?: WorkProject[];
+	header?: Pick<PageHeaderContent, 'label' | 'title' | 'description'> | null;
 }
+
+const defaultHeader: Required<Pick<PageHeaderContent, 'title' | 'description'>> &
+	Pick<PageHeaderContent, 'label'> = {
+	label: 'Selected work',
+	title: 'Creative collaborations & commissions',
+	description:
+		'From bespoke brand stories to immersive installations, these partnerships highlight the range of multidisciplinary projects crafted with Purple Trope.',
+};
 
 const defaultProjects: WorkProject[] = [
 	{
@@ -105,11 +114,22 @@ type LightboxState = {
 	imageIndex: number;
 } | null;
 
-const WorkShowcase: React.FC<WorkShowcaseProps> = ({ projects }) => {
+const WorkShowcase: React.FC<WorkShowcaseProps> = ({ projects, header }) => {
 	const resolvedProjects = React.useMemo(
 		() => (projects && projects.length > 0 ? projects : defaultProjects),
 		[projects],
 	);
+	const resolvedHeader = React.useMemo(() => {
+		if (!header) {
+			return defaultHeader;
+		}
+
+		return {
+			label: header.label ?? defaultHeader.label,
+			title: header.title ?? defaultHeader.title,
+			description: header.description ?? defaultHeader.description,
+		};
+	}, [header]);
 
 	const [lightboxState, setLightboxState] = React.useState<LightboxState>(null);
 
@@ -205,12 +225,9 @@ const WorkShowcase: React.FC<WorkShowcaseProps> = ({ projects }) => {
 	return (
 		<section className={styles.section}>
 			<div className={styles.header}>
-				<span className={styles.eyebrow}>Selected work</span>
-				<h1 className={styles.title}>Creative collaborations & commissions</h1>
-				<p className={styles.lede}>
-					From bespoke brand stories to immersive installations, these partnerships highlight
-					the range of multidisciplinary projects crafted with Purple Trope.
-				</p>
+				{resolvedHeader.label && <span className={styles.eyebrow}>{resolvedHeader.label}</span>}
+				<h1 className={styles.title}>{resolvedHeader.title}</h1>
+				<p className={styles.lede}>{resolvedHeader.description}</p>
 			</div>
 
 			<div className={styles.grid}>
@@ -303,7 +320,12 @@ const WorkShowcase: React.FC<WorkShowcaseProps> = ({ projects }) => {
 									{badges.length > 0 && (
 										<div className={styles.badgeGroup}>
 											{badges.map((tag) => (
-												<Badge key={`${project.id}-tag-${tag}`}>{tag}</Badge>
+												<Badge
+													key={`${project.id}-tag-${tag}`}
+													className={styles.badge}
+												>
+													{tag}
+												</Badge>
 											))}
 										</div>
 									)}

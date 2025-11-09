@@ -3,6 +3,7 @@ import Layout from '../layouts/Layout.astro';
 import WorkShowcase, { type WorkImage, type WorkProject } from '../components/work/WorkShowcase';
 import { loadSanityQuery } from '../lib/sanityClient';
 import groq from 'groq';
+import type { PageHeaderContent } from '../types/pageHeader';
 
 export const prerender = true;
 
@@ -20,6 +21,12 @@ const workQuery = groq`*[_type == "work"] | order(coalesce(order, 9999) asc, _cr
 }`;
 
 const sanityProjects = await loadSanityQuery<WorkProject[]>(workQuery);
+const pageHeaderQuery = groq`*[_type == "pageHeader" && page == "work"][0]{
+  label,
+  title,
+  description
+}`;
+const pageHeader = await loadSanityQuery<Pick<PageHeaderContent, "label" | "title" | "description"> | null>(pageHeaderQuery);
 
 const projects: WorkProject[] = (sanityProjects ?? []).map((project) => {
 	const filteredBadges = project.cmsOptions?.filter((tag) => Boolean(tag && tag.trim()));
@@ -34,5 +41,5 @@ const projects: WorkProject[] = (sanityProjects ?? []).map((project) => {
 ---
 
 <Layout title="Work · Debjani Portfolio">
-	<WorkShowcase projects={projects} />
+	<WorkShowcase client:load projects={projects} header={pageHeader ?? undefined} />
 </Layout>

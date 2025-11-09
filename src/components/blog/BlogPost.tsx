@@ -45,7 +45,8 @@ const getInitials = (value: string) =>
     .toUpperCase();
 
 const BlogPostView: React.FC<BlogPostProps> = ({ post }) => {
-  const heroImage = urlFor(post.heroImage)
+  const coverImageSource = post.coverImage ?? post.mainImage ?? post.heroImage;
+  const coverImageUrl = urlFor(coverImageSource)
     ?.width(1600)
     .height(900)
     .quality(85)
@@ -63,9 +64,13 @@ const BlogPostView: React.FC<BlogPostProps> = ({ post }) => {
         <a href="/blog" className={styles.backLink}>
           ← Back to all posts
         </a>
-        {heroImage ? (
+        {coverImageUrl ? (
           <div className={styles.hero}>
-            <img src={heroImage} alt={post.title} loading="eager" />
+            <img
+              src={coverImageUrl}
+              alt={coverImageSource?.alt ?? post.title}
+              loading="eager"
+            />
           </div>
         ) : null}
         <header className={styles.heading}>

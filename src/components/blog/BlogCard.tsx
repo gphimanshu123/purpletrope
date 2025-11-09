@@ -35,17 +35,18 @@ const getInitials = (value: string) =>
 		.toUpperCase();
 
 const BlogCard: React.FC<BlogCardProps> = ({ post }) => {
-	const heroImage = urlFor(post.heroImage)?.width(960).height(640).quality(80).url();
+	const coverImageSource = post.coverImage ?? post.mainImage ?? post.heroImage;
+	const coverImage = urlFor(coverImageSource)?.width(960).height(640).quality(80).url();
 	const authorAvatar = urlFor(post.author.avatar)?.width(120).height(120).quality(80).url();
 
 	return (
 		<a href={`/blog/${post.slug}`} className={styles.cardLink}>
 			<Card>
 				<CardMedia>
-					{heroImage ? (
+					{coverImage ? (
 						<img
-							src={heroImage}
-							alt={post.title}
+							src={coverImage}
+							alt={coverImageSource?.alt ?? post.title}
 							className={styles.mediaImage}
 							loading="lazy"
 						/>

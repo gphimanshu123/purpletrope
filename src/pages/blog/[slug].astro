@@ -1,6 +1,7 @@
 ---
 import Layout from '../../layouts/Layout.astro';
 import BlogPostView from '../../components/blog/BlogPost';
+import ScrollProgressBar from '../../components/blog/ScrollProgressBar';
 import { loadSanityQuery } from '../../lib/sanityClient';
 import groq from 'groq';
 import type { BlogPost } from '../../types/blog';
@@ -29,6 +30,8 @@ const postQuery = groq`*[_type == "post" && slug.current == $slug][0]{
   publishedAt,
   tags,
   heroImage,
+  mainImage,
+  "coverImage": coalesce(mainImage, heroImage),
   body,
   "author": author->{
     "id": _id,
@@ -46,6 +49,7 @@ if (!post) {
 ---
 
 <Layout title={`${post.title} · Debjani Portfolio`}>
+	<ScrollProgressBar client:load />
 	<BlogPostView post={post} />
 </Layout>
 

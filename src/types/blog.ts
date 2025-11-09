@@ -28,6 +28,8 @@ export interface BlogPostBase {
 	publishedAt: string;
 	tags?: string[];
 	heroImage?: SanityImage;
+	mainImage?: SanityImage;
+	coverImage?: SanityImage;
 	author: BlogAuthor;
 }
 
