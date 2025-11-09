@@ -327,12 +327,23 @@
     padding: 110px 28px 90px;
   }
 
+  .eyebrow {
+    font-size: 0.8rem;
+    letter-spacing: 0.12em;
+  }
+
+  .title {
+    font-size: clamp(2rem, 9vw, 3.1rem);
+  }
+
   .header {
     text-align: left;
   }
 
   .lede {
     margin: 0;
+    font-size: 1rem;
+    line-height: 1.6;
   }
 
   .grid {
@@ -341,6 +352,15 @@
 
   .mediaImage {
     height: 280px;
+  }
+
+  .metaLabel {
+    font-size: 0.82rem;
+    letter-spacing: 0.06em;
+  }
+
+  .metaValue {
+    font-size: 0.95rem;
   }
 
   .badgeGroup {
@@ -359,8 +379,17 @@
     padding: 96px 20px 80px;
   }
 
+  .eyebrow {
+    font-size: 0.72rem;
+  }
+
   .title {
     font-size: clamp(2.4rem, 12vw, 3.4rem);
+  }
+
+  .lede {
+    font-size: 0.95rem;
+    line-height: 1.55;
   }
 
   .grid {
