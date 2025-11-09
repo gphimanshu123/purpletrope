@@ -57,6 +57,86 @@
 	min-height: 100%;
 }
 
+.media {
+	display: flex;
+	flex-direction: column;
+	gap: 0;
+}
+
+.mediaButton {
+	position: relative;
+	display: block;
+	width: 100%;
+	padding: 0;
+	border: none;
+	background: none;
+	cursor: pointer;
+}
+
+.mediaButton:focus-visible {
+	outline: 3px solid #f97316;
+	outline-offset: 6px;
+}
+
+.mediaImage {
+	display: block;
+	width: 100%;
+	height: 320px;
+	object-fit: cover;
+}
+
+.mediaCount {
+	position: absolute;
+	right: 18px;
+	bottom: 18px;
+	padding: 6px 14px;
+	border-radius: 999px;
+	background-color: rgba(5, 5, 5, 0.88);
+	color: #f9fafb;
+	font-family: 'Gloria Hallelujah', cursive;
+	font-size: 0.85rem;
+	letter-spacing: 0.08em;
+	text-transform: uppercase;
+}
+
+.thumbnailRail {
+	display: flex;
+	gap: 12px;
+	padding: 14px 20px 18px;
+	background: rgba(255, 255, 255, 0.75);
+	backdrop-filter: blur(4px);
+	border-top: 2px solid rgba(0, 0, 0, 0.12);
+}
+
+.thumbnailButton {
+	border: 2px solid #0b0b0b;
+	border-radius: 18px;
+	padding: 0;
+	background-color: #ffffff;
+	overflow: hidden;
+	cursor: pointer;
+	width: 88px;
+	height: 88px;
+	transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.thumbnailButton:hover {
+	transform: translateY(-4px);
+	box-shadow: 0 10px 24px rgba(0, 0, 0, 0.25);
+}
+
+.thumbnailButton:focus-visible {
+	outline: 3px solid #f97316;
+	outline-offset: 4px;
+}
+
+.thumbnailImage {
+	width: 100%;
+	height: 100%;
+	object-fit: cover;
+	display: block;
+}
+
 .cardContent {
 	display: flex;
 	flex-direction: column;
@@ -93,22 +173,109 @@
 	gap: 10px;
 }
 
-.link {
-	align-self: flex-start;
-	padding-bottom: 4px;
-	border-bottom: 2px solid currentColor;
-	font-family: 'Gloria Hallelujah', cursive;
-	font-size: 0.95rem;
-	letter-spacing: 0.12em;
-	text-transform: uppercase;
-	text-decoration: none;
-	color: #000000;
-	transition: color 0.2s ease, transform 0.2s ease;
+.lightboxOverlay {
+	position: fixed;
+	inset: 0;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	padding: clamp(16px, 4vw, 48px);
+	background-color: rgba(0, 0, 0, 0.88);
+	backdrop-filter: blur(2px);
+	z-index: 999;
 }
 
-.link:hover {
+.lightboxClose {
+	position: absolute;
+	top: clamp(18px, 5vh, 42px);
+	right: clamp(18px, 5vh, 42px);
+	border: none;
+	background: transparent;
+	color: #f9fafb;
+	font-size: clamp(2.4rem, 4.5vw, 3.4rem);
+	cursor: pointer;
+	line-height: 1;
+	transition: transform 0.2s ease, color 0.2s ease;
+}
+
+.lightboxClose:hover {
+	transform: scale(1.08);
 	color: #f97316;
-	transform: translateY(-2px);
+}
+
+.lightboxInner {
+	position: relative;
+	display: flex;
+	align-items: center;
+	gap: clamp(16px, 4vw, 36px);
+	width: min(1040px, 92vw);
+}
+
+.lightboxNavButton {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	width: clamp(52px, 7vw, 72px);
+	height: clamp(52px, 7vw, 72px);
+	border-radius: 999px;
+	border: none;
+	background: rgba(255, 255, 255, 0.14);
+	color: #f9fafb;
+	font-size: clamp(2.4rem, 4vw, 3.2rem);
+	line-height: 1;
+	cursor: pointer;
+	transition: background-color 0.2s ease, transform 0.2s ease;
+}
+
+.lightboxNavButton:hover:not(:disabled) {
+	background: rgba(255, 255, 255, 0.24);
+	transform: translateY(-4px);
+}
+
+.lightboxNavButton:disabled {
+	opacity: 0.35;
+	cursor: default;
+}
+
+.lightboxFigure {
+	margin: 0;
+	flex: 1;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	gap: 18px;
+	text-align: center;
+}
+
+.lightboxImage {
+	width: 100%;
+	max-height: clamp(320px, 78vh, 780px);
+	object-fit: contain;
+	border-radius: 28px;
+	border: 3px solid #ffffff;
+	background-color: #050505;
+	box-shadow: 0 24px 60px rgba(0, 0, 0, 0.45);
+}
+
+.lightboxCaption {
+	color: #f9fafb;
+	font-family: 'Gloria Hallelujah', cursive;
+	font-size: 1rem;
+	letter-spacing: 0.05em;
+	text-transform: uppercase;
+	max-width: 80%;
+}
+
+.srOnly {
+	position: absolute;
+	width: 1px;
+	height: 1px;
+	padding: 0;
+	margin: -1px;
+	overflow: hidden;
+	clip: rect(0, 0, 0, 0);
+	border: 0;
+	white-space: nowrap;
 }
 
 @media (max-width: 1024px) {
@@ -137,6 +304,10 @@
 	.grid {
 		gap: 28px;
 	}
+
+	.mediaImage {
+		height: 280px;
+	}
 }
 
 @media (max-width: 540px) {
@@ -150,6 +321,39 @@
 
 	.grid {
 		grid-template-columns: 1fr;
+	}
+
+	.mediaImage {
+		height: 220px;
+	}
+
+	.thumbnailRail {
+		padding: 10px 16px 14px;
+		gap: 10px;
+	}
+
+	.thumbnailButton {
+		width: 70px;
+		height: 70px;
+	}
+
+	.lightboxInner {
+		flex-direction: column;
+		gap: 16px;
+	}
+
+	.lightboxNavButton {
+		width: clamp(46px, 14vw, 60px);
+		height: clamp(46px, 14vw, 60px);
+		font-size: clamp(2rem, 6vw, 2.6rem);
+	}
+
+	.lightboxFigure {
+		width: 100%;
+	}
+
+	.lightboxImage {
+		max-height: 64vh;
 	}
 }
 

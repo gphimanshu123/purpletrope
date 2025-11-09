@@ -1,0 +1,138 @@
+.container {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  z-index: 5;
+}
+
+.link {
+  position: absolute;
+  pointer-events: auto;
+  text-decoration: none;
+  transform-origin: left center;
+  transition:
+    transform 0.35s ease,
+    filter 0.35s ease;
+}
+
+.link:hover {
+  transform: scale(1.05) rotate(var(--tilt, -6deg));
+  filter: drop-shadow(0 16px 24px rgba(23, 15, 58, 0.26));
+}
+
+.linkBadge {
+  background: linear-gradient(135deg, #4934a5 0%, #35256d 100%);
+  color: #ffffff;
+  border-color: rgba(22, 12, 56, 0.8);
+  box-shadow: 6px 6px 0 rgba(17, 17, 17, 0.6);
+  font-size: clamp(0.7rem, 2.8vw, 1rem);
+  padding: clamp(0.4rem, 1.8vw, 0.7rem) clamp(1rem, 3vw, 1.55rem);
+  letter-spacing: 0.18em;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  text-transform: uppercase;
+  min-width: clamp(8rem, 32vw, 11.5rem);
+}
+
+.linkBadge::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  box-shadow: 0 0 0 2px rgba(255, 255, 255, 0.25);
+  opacity: 0;
+  transition: opacity 0.35s ease;
+}
+
+.link:hover .linkBadge::after,
+.link:focus-visible .linkBadge::after {
+  opacity: 1;
+}
+
+.linkBadge {
+  position: relative;
+}
+
+.linkBackstage {
+  --tilt: -10deg;
+  top: 16vh;
+  left: 10vw;
+  transform: rotate(var(--tilt));
+}
+
+.linkCollection {
+  --tilt: 6deg;
+  top: 36vh;
+  right: 10%;
+  transform: rotate(var(--tilt));
+}
+
+.linkCraft {
+  --tilt: -4deg;
+  top: 78vh;
+  left: 8vw;
+  transform: rotate(var(--tilt));
+}
+
+.link:focus-visible {
+  outline: none;
+}
+
+.link:focus-visible .linkBadge {
+  box-shadow:
+    0 0 0 2px #ffffff,
+    0 0 0 6px rgba(73, 52, 165, 0.45);
+}
+
+@media (max-width: 900px) {
+  .linkBadge {
+    font-size: clamp(0.6rem, 2.6vw, 0.85rem);
+    padding: clamp(0.32rem, 2vw, 0.55rem) clamp(0.8rem, 4vw, 1.25rem);
+    min-width: clamp(6.5rem, 36vw, 9rem);
+  }
+
+  .linkBackstage {
+    top: 14vh;
+    left: 8vw;
+    --tilt: -8deg;
+  }
+
+  .linkCollection {
+    top: 34vh;
+    right: 2%;
+    --tilt: 5deg;
+  }
+
+  .linkCraft {
+    top: 82vh;
+    left: 12vw;
+    --tilt: -5deg;
+  }
+}
+
+@media (max-width: 560px) {
+  .linkBadge {
+    font-size: clamp(0.45rem, 3.2vw, 0.65rem);
+    padding: clamp(0.22rem, 2.8vw, 0.4rem) clamp(0.55rem, 5.5vw, 0.85rem);
+    min-width: clamp(4.8rem, 52vw, 7.2rem);
+    box-shadow: 3px 3px 0 rgba(17, 17, 17, 0.55);
+  }
+
+  .linkBackstage {
+    top: 18vh;
+    left: 6vw;
+  }
+
+  .linkCollection {
+    top: 32vh;
+    right: 2%;
+  }
+
+  .linkCraft {
+    top: 59vh;
+    left: 8vw;
+  }
+}

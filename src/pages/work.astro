@@ -1,10 +1,38 @@
 ---
 import Layout from '../layouts/Layout.astro';
-import WorkShowcase from '../components/work/WorkShowcase';
+import WorkShowcase, { type WorkImage, type WorkProject } from '../components/work/WorkShowcase';
+import { loadSanityQuery } from '../lib/sanityClient';
+import groq from 'groq';
+
+export const prerender = true;
+
+const workQuery = groq`*[_type == "work"] | order(coalesce(order, 9999) asc, _createdAt desc) {
+  "id": _id,
+  title,
+  role,
+  description,
+  period,
+  cmsOptions,
+  images[]{
+    ...,
+    "url": asset->url
+  }
+}`;
+
+const sanityProjects = await loadSanityQuery<WorkProject[]>(workQuery);
+
+const projects: WorkProject[] = (sanityProjects ?? []).map((project) => {
+	const filteredBadges = project.cmsOptions?.filter((tag) => Boolean(tag && tag.trim()));
+	const filteredImages = ((project.images ?? []) as WorkImage[]).filter((image) => Boolean(image));
+
+	return {
+		...project,
+		cmsOptions: filteredBadges,
+		images: filteredImages.length > 0 ? filteredImages : undefined,
+	};
+});
 ---
 
 <Layout title="Work · Debjani Portfolio">
-	<WorkShowcase />
+	<WorkShowcase projects={projects} />
 </Layout>
-
-

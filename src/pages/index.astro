@@ -1,11 +1,13 @@
 ---
-import ShantellMartin from '../components/ShantellMartin.astro';
 import Layout from '../layouts/Layout.astro';
+import HeroTiltedLinks from '../components/HeroTiltedLinks';
 ---
 
-<Layout title="Debjani Portfolio - Shantell Martin Inspired">
-	
-	<svg class="bg" version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 1445 2170" style="enable-background:new 0 0 1445 2170;" xml:space="preserve">
+<Layout title="Debjani Portfolio - Fresh Perspectives">
+	<section class="hero-stage">
+		<HeroTiltedLinks />
+		<div class="hero-stage__artwork">
+			<svg class="bg" version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 1445 2170" style="enable-background:new 0 0 1445 2170;" xml:space="preserve">
 		<style type="text/css">
 			.st0{fill:none;stroke:#000000;stroke-width:6;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:10;}
 			.st1{fill:none;stroke:#000000;stroke-width:5;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:10;}
@@ -1255,6 +1257,61 @@ import Layout from '../layouts/Layout.astro';
 				c-12.3-4.8-25.3-7.5-38.3-8.1"></path>
 			<path class="st0" d="M1373.1,494.1c-1.7,4.6,1.7,10.3,6.7,11c4.8,0.8,9.7-3.7,9.5-8.6c-0.2-5-5.6-8.8-10.3-7.6"></path>
 		</g>
-		</svg>	
+			</svg>
+			<div class="hero-stage__model" aria-hidden="true">
+				<img src="/img/artist.png" alt="Debjani running with a microphone" loading="lazy" decoding="async" />
+			</div>
+		</div>
+	</section>
 
+	<style>
+		.hero-stage {
+			position: relative;
+			min-height: 100vh;
+			overflow: hidden;
+			background: #ffffff;
+		}
+
+		.hero-stage__artwork {
+			position: relative;
+			width: 100%;
+			height: 100%;
+		}
+
+		.hero-stage__artwork svg {
+			display: block;
+			width: 100%;
+			height: auto;
+		}
+
+		.hero-stage__model {
+			position: absolute;
+			inset: 6% 18% 4% 18%;
+			display: flex;
+			align-items: center;
+			justify-content: center;
+			pointer-events: none;
+			z-index: 3;
+		}
+
+		.hero-stage__model img {
+			width: 100%;
+			height: 100%;
+			object-fit: contain;
+		}
+
+		@media (max-width: 768px) {
+			.hero-stage {
+				min-height: 85vh;
+			}
+
+			.hero-stage__artwork svg {
+				height: auto;
+			}
+
+			.hero-stage__model {
+				inset: 6% 8% 6% 8%;
+			}
+		}
+	</style>
 </Layout>
