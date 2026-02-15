@@ -36,21 +36,15 @@ MATTERS</span>
 				<a data-label="blogs" href="/blog/" class="FooterLink u-Route">BLOGS</a>
 			</div>
 			<div class="FooterLinksSocial">
-				<span class="FooterLinksBlock">
-					<a href="#" target="_blank">FACEBOOK</a>
-					<a href="#" target="_blank">INSTAGRAM</a>
-				</span>
-				<span class="FooterLinksBlock">
-					<a href="#" target="_blank">TWITTER</a>
-					<a href="#" target="_blank">PINTEREST</a>
-				</span>
-				<span class="FooterLinksBlock">
-					<a href="#" target="_blank">YOUTUBE</a>
-				</span>
+				<a href="#" target="_blank">FACEBOOK</a>
+				<a href="#" target="_blank">INSTAGRAM</a>
+				<a href="#" target="_blank">TWITTER</a>
+				<a href="#" target="_blank">PINTEREST</a>
+				<a href="#" target="_blank">YOUTUBE</a>
 			</div>
 		</div>
 		<div class="FooterLinksBlock FooterLinksBlock--disclamer">
-			<span>© DEBJANI HAZARIKA 2025 / ALL RIGHTS RESERVED</span>
+			<span>© 2026 Purple Trope. An Artistic Initiative by Debjani Hazarika/All Rights Reserved</span>
 		</div>
 	</div>
 </footer>
@@ -195,10 +189,11 @@ MATTERS</span>
 	.FooterLinksRow {
 			display: flex;
 			flex-direction: row;
-			justify-content: flex-start;
+			justify-content: space-between;
+			align-items: flex-start;
 			width: 100%;
 			margin-bottom: 20px;
-			padding: 0 10px 0 20px;
+			padding: 0 30px;
 			box-sizing: border-box;
 		}
 	}
@@ -261,24 +256,18 @@ MATTERS</span>
 	.FooterLinksSocial {
 		display: flex;
 		justify-content: center;
-		align-items: flex-start;
+		align-items: center;
 		flex-wrap: wrap;
 		gap: 2.5em;
 		margin-top: 1.5em;
 	}
 
-	.FooterLinksSocial .FooterLinksBlock {
-		display: flex;
-		flex-direction: column;
-		align-items: center;
-		margin: 0;
-		gap: 0.25em;
-	}
-
-	.FooterLinksSocial .FooterLinksBlock a {
+	.FooterLinksSocial a {
 		font-family: inherit;
 		font-weight: inherit;
-		font-size: 1em;
+		font-size: 2.2em;
+		text-decoration: none;
+		color: #000;
 	}
 
 	@media screen and (max-width: 768px) {
@@ -301,9 +290,8 @@ MATTERS</span>
 
 	@media screen and (max-width: 768px) {
 		.FooterLinksSocial {
-			width: auto;
 			flex: 1;
-			margin-left: 60px;
+			margin-left: 0;
 		}
 	}
 
@@ -335,29 +323,16 @@ MATTERS</span>
 		.FooterLinksSocial {
 			display: flex;
 			flex-direction: column;
-			align-items: flex-start;
-			gap: 8px;
-			width: 48%;
+			align-items: flex-end;
+			gap: 12px;
+			flex: 1;
+			margin-left: 0;
+			width: auto;
 		}
-	}
 
-	@media screen and (max-width: 768px) {
-		.FooterLinksSocial .FooterLinksBlock {
-			display: flex;
-			flex-direction: column;
-			align-items: flex-start;
-			gap: 5px;
-			font-family: Arial, sans-serif;
-			font-weight: normal;
-			margin: 0 0 10px 0;
-			width: 100%;
-		}
-	}
-
-	@media screen and (max-width: 768px) {
-		.FooterLinksSocial .FooterLinksBlock a {
-			font-size: 24px;
-			line-height: 1.2;
+		.FooterLinksSocial a {
+			font-size: 45px;
+			line-height: 1.1;
 			color: #000;
 			text-decoration: none;
 			font-weight: bold;
@@ -366,8 +341,7 @@ MATTERS</span>
 			padding: 0;
 			border: none;
 			background: transparent;
-			margin-bottom: 8px;
-			width: auto;
+			text-align: right;
 		}
 	}
 

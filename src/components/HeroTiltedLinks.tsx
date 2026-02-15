@@ -18,17 +18,17 @@ export interface HeroTiltedLinksProps {
 
 const defaultLinks: readonly HeroLink[] = [
   {
-    label: "Info",
+    label: "Backstage",
     href: "/info",
     variant: "linkBackstage",
   },
   {
-    label: "Shop",
+    label: "Collection",
     href: "/shop",
     variant: "linkCollection",
   },
   {
-    label: "Work",
+    label: "Our Craft",
     href: "/work",
     variant: "linkCraft",
   },
