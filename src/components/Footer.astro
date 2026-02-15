@@ -331,7 +331,7 @@ MATTERS</span>
 		}
 
 		.FooterLinksSocial a {
-			font-size: 40px;
+			font-size: 38px;
 			line-height: 1.1;
 			color: #000;
 			text-decoration: none;
@@ -359,6 +359,15 @@ MATTERS</span>
 		letter-spacing: 0;
 		top: 3px;
 		margin: .1875em -.125em 0 2.125em;
+	}
+
+	.FooterLinksBlock.FooterLinksBlock--disclamer {
+		display: block;
+		width: 100%;
+		text-align: center;
+		margin: 3em 0 0 0;
+		left: 0;
+		top: 0;
 	}
 
 	.FooterLinksBlock a,
@@ -389,16 +398,27 @@ MATTERS</span>
 		text-transform: none;
 	}
 
+	.FooterLinksBlock--disclamer span {
+		font-size: 11px;
+		letter-spacing: 0.05em;
+		opacity: 0.8;
+	}
+
 	@media screen and (max-width: 768px) {
 		.FooterLinksBlock--disclamer {
 			width: 100%;
 			text-align: center;
 			margin-top: 30px;
+			clear: both;
+			margin-left: 0;
+		}
+
+		.FooterLinksBlock--disclamer span {
 			text-transform: uppercase;
 			font-weight: 600;
-			font-size: 12px;
+			font-size: 10px;
 			color: #666;
-			clear: both;
+			opacity: 1;
 		}
 	}
 
